@@ -1,0 +1,17 @@
+{
+  "name": "myportfolio",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && posthtml dist/index.html -c posthtml.config.cjs -o dist/index.html",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "vite-plugin-include-html": "^1.0.0"
+  }
+}

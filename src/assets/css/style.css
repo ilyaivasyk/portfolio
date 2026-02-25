@@ -1,0 +1,241 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4f4ff5, #c026d3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #5c6fff, #d946ef);
+}
+
+/* Grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(79, 79, 245, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 79, 245, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glass panel effect */
+.glass-panel {
+  background: rgba(15, 15, 24, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(79, 79, 245, 0.15);
+}
+
+/* Glow effects */
+.glow-cyan {
+  box-shadow:
+    0 0 20px rgba(0, 245, 255, 0.3),
+    0 0 40px rgba(0, 245, 255, 0.1);
+}
+
+.glow-purple {
+  box-shadow:
+    0 0 20px rgba(191, 0, 255, 0.3),
+    0 0 40px rgba(191, 0, 255, 0.1);
+}
+
+.glow-text {
+  text-shadow:
+    0 0 30px rgba(0, 245, 255, 0.5),
+    0 0 60px rgba(191, 0, 255, 0.3);
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #00f5ff;
+  outline-offset: 2px;
+}
+
+/* Slider styles */
+.slider {
+  position: relative;
+}
+
+.slider__viewport {
+  overflow: hidden;
+}
+
+.slider__track {
+  display: flex;
+  transition: transform 300ms ease;
+  will-change: transform;
+}
+
+.slider__slide {
+  flex: 0 0 100%;
+  padding: 0 1rem;
+}
+
+/* base */
+.slider__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  transition: 0.25s;
+}
+
+.slider__btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.slider__icon {
+  font-size: 28px;
+  line-height: 1;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* <575: hide arrows */
+@media (max-width: 574px) {
+  .slider__btn {
+    display: none !important;
+  }
+}
+
+/* 575+: position inside */
+@media (min-width: 575px) {
+  .slider__btn--prev {
+    left: -0.5rem;
+  }
+
+  .slider__btn--next {
+    right: -0.5rem;
+  }
+}
+
+/* 768+: move outside */
+@media (min-width: 768px) {
+  .slider__btn--prev {
+    left: -1rem;
+  }
+
+  .slider__btn--next {
+    right: -1rem;
+  }
+}
+
+/* optional: when swiper disables buttons */
+.slider__btn.swiper-button-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.slider__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.slider__dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(148, 163, 184, 0.6);
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.slider__dot--active {
+  background-color: #00f5ff;
+  transform: scale(1.1);
+}
+
+/* Book card hover */
+.book-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.book-card:hover {
+  transform: translateY(-10px) rotateY(-5deg);
+}
+
+/* Animated stars */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: star-twinkle 3s ease-in-out infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg,
+      #00f5ff 0%,
+      #bf00ff 50%,
+      #ff00aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Button hover effects */
+.btn-cosmic {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-cosmic::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-cosmic:hover::before {
+  left: 100%;
+}
+
+/* Section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(79, 79, 245, 0.3),
+      rgba(191, 0, 255, 0.3),
+      transparent);
+}
+
+
+@media (min-width:575px) {
+  .scroll-projects {
+    display: none !important;
+  }
+}
