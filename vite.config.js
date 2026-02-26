@@ -3,7 +3,7 @@ import includeHtml from "vite-plugin-include-html";
 
 export default defineConfig(({ command }) => ({
   root: "src",
-  base: command === "serve" ? "/" : "/REPO_NAME/",
+  base: command === "serve" ? "/" : "/portfolio/",
   plugins: [includeHtml()],
   build: {
     outDir: "../dist",
