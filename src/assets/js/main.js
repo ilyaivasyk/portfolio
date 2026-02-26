@@ -109,67 +109,138 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // burger-menu
+  // Mobile menu (burger)
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const body = document.body;
 
-  const btn = document.getElementById("mobile-menu-btn");
-  const menu = document.getElementById("mobile-menu");
-  if (!btn || !menu) return;
+  if (mobileMenuBtn && mobileMenu && body) {
+    let isOpen = false;
 
-  const burger = btn.querySelector(".icon-burger");
-  const closeIcon = btn.querySelector(".icon-close");
+    // Create dark overlay behind nav but above page content
+    const overlay = document.createElement("div");
+    overlay.id = "mobile-menu-overlay";
+    overlay.className =
+      "fixed inset-0 bg-space-900/70 backdrop-blur-sm opacity-0 pointer-events-none " +
+      "transition-opacity duration-300 z-40";
+    document.body.appendChild(overlay);
 
-  const setIcons = (isOpen) => {
-    burger?.classList.toggle("hidden", isOpen);
-    closeIcon?.classList.toggle("hidden", !isOpen);
-  };
+    // Prepare menu for animated open/close
+    mobileMenu.classList.add(
+      "transition-all",
+      "duration-300",
+      "ease-out",
+      "transform",
+      "opacity-0",
+      "-translate-y-2",
+      "pointer-events-none",
+    );
 
-  const open = () => {
-    // показати блок
-    menu.classList.remove("hidden");
+    // Current burger icon path (3 lines) -> we’ll morph it to X
+    const burgerPath = mobileMenuBtn.querySelector("svg path");
+    const BURGER_D = "M4 6h16M4 12h16M4 18h16";
+    const CLOSE_D = "M6 18L18 6M6 6l12 12";
 
-    // дати браузеру 1 кадр, щоб transition спрацював
-    requestAnimationFrame(() => {
-      menu.classList.remove(
+    function setBurgerIcon(open) {
+      if (!burgerPath) return;
+      burgerPath.setAttribute("d", open ? CLOSE_D : BURGER_D);
+    }
+
+    function lockScroll() {
+      body.style.overflow = "hidden";
+    }
+
+    function unlockScroll() {
+      body.style.overflow = "";
+    }
+
+    function openMenu() {
+      if (isOpen) return;
+      isOpen = true;
+      mobileMenuBtn.setAttribute("aria-expanded", "true");
+
+      // Show overlay & menu with animation
+      overlay.classList.remove("pointer-events-none");
+      requestAnimationFrame(() => {
+        overlay.classList.add("opacity-100");
+      });
+
+      mobileMenu.classList.remove("hidden", "pointer-events-none");
+      // small delay to allow transition from initial state
+      requestAnimationFrame(() => {
+        mobileMenu.classList.remove("opacity-0", "-translate-y-2");
+        mobileMenu.classList.add("opacity-100", "translate-y-0");
+      });
+
+      lockScroll();
+      setBurgerIcon(true);
+    }
+
+    function closeMenu() {
+      if (!isOpen) return;
+      isOpen = false;
+      mobileMenuBtn.setAttribute("aria-expanded", "false");
+
+      // Fade out overlay
+      overlay.classList.remove("opacity-100");
+      // fade/slide menu up
+      mobileMenu.classList.remove("opacity-100", "translate-y-0");
+      mobileMenu.classList.add(
         "opacity-0",
         "-translate-y-2",
         "pointer-events-none",
       );
-      menu.classList.add("opacity-100", "translate-y-0");
+
+      // After transition, hide menu completely
+      setTimeout(() => {
+        if (!isOpen) {
+          mobileMenu.classList.add("hidden");
+          overlay.classList.add("pointer-events-none");
+        }
+      }, 300); // matches duration-300
+
+      unlockScroll();
+      setBurgerIcon(false);
+    }
+
+    function toggleMenu() {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+
+    // Toggle on burger click
+    mobileMenuBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleMenu();
     });
 
-    btn.setAttribute("aria-expanded", "true");
-    setIcons(true);
-  };
+    // Close when clicking overlay
+    overlay.addEventListener("click", () => {
+      if (isOpen) closeMenu();
+    });
 
-  const close = () => {
-    menu.classList.add("opacity-0", "-translate-y-2", "pointer-events-none");
-    menu.classList.remove("opacity-100", "translate-y-0");
-
-    btn.setAttribute("aria-expanded", "false");
-    setIcons(false);
-
-    // після анімації приховати display:none
-    window.setTimeout(() => {
-      if (btn.getAttribute("aria-expanded") === "false") {
-        menu.classList.add("hidden");
+    // Close on Escape
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen) {
+        closeMenu();
       }
-    }, 200);
-  };
+    });
 
-  btn.addEventListener("click", () => {
-    const isOpen = btn.getAttribute("aria-expanded") === "true";
-    isOpen ? close() : open();
-  });
+    // Close when clicking any nav link inside mobile menu
+    mobileMenu.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        if (isOpen) closeMenu();
+      });
+    });
 
-  // Закривати після кліку по пункту меню
-  menu.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener("click", close);
-  });
-
-  // Закривати по ESC
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") close();
-  });
-
-  // end of DOMContentLoaded
+    // Close when clicking language switch buttons
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (isOpen) closeMenu();
+      });
+    });
+  }
 });
