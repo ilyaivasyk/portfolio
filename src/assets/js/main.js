@@ -59,23 +59,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Smooth scroll for navigation
-  document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((anchor) => {
-      anchor.addEventListener("click", (event) => {
-        const href = anchor.getAttribute("href");
-        if (!href || href === "#") return;
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", (event) => {
+      const href = anchor.getAttribute("href");
+      if (!href || href === "#") return;
 
-        const target = document.querySelector(href);
-        if (!target) return;
+      const target = document.querySelector(href);
+      if (!target) return;
 
-        event.preventDefault();
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     });
+  });
 
   // Intersection Observer for section reveal animations
   const observerOptions = {
@@ -110,5 +108,68 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-});
 
+  // burger-menu
+
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  if (!btn || !menu) return;
+
+  const burger = btn.querySelector(".icon-burger");
+  const closeIcon = btn.querySelector(".icon-close");
+
+  const setIcons = (isOpen) => {
+    burger?.classList.toggle("hidden", isOpen);
+    closeIcon?.classList.toggle("hidden", !isOpen);
+  };
+
+  const open = () => {
+    // показати блок
+    menu.classList.remove("hidden");
+
+    // дати браузеру 1 кадр, щоб transition спрацював
+    requestAnimationFrame(() => {
+      menu.classList.remove(
+        "opacity-0",
+        "-translate-y-2",
+        "pointer-events-none",
+      );
+      menu.classList.add("opacity-100", "translate-y-0");
+    });
+
+    btn.setAttribute("aria-expanded", "true");
+    setIcons(true);
+  };
+
+  const close = () => {
+    menu.classList.add("opacity-0", "-translate-y-2", "pointer-events-none");
+    menu.classList.remove("opacity-100", "translate-y-0");
+
+    btn.setAttribute("aria-expanded", "false");
+    setIcons(false);
+
+    // після анімації приховати display:none
+    window.setTimeout(() => {
+      if (btn.getAttribute("aria-expanded") === "false") {
+        menu.classList.add("hidden");
+      }
+    }, 200);
+  };
+
+  btn.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    isOpen ? close() : open();
+  });
+
+  // Закривати після кліку по пункту меню
+  menu.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", close);
+  });
+
+  // Закривати по ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
+  });
+
+  // end of DOMContentLoaded
+});
