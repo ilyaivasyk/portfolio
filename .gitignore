@@ -25,3 +25,6 @@ Thumbs.db
 
 # cache
 .cache/
+
+src/assets/video/
+*.mp4
