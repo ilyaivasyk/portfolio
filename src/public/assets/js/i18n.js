@@ -381,10 +381,9 @@ const telegramLink = document.getElementById('telegram-link');
 
 function openContact(service = 'General project inquiry') {
   const message = `Hi Illia! I'm interested in: ${service}.`;
-  const pageUrl = window.location.href.split('#')[0];
   selectedService.textContent = service;
-  whatsappLink.href = `https://wa.me/?text=${encodeURIComponent(message)}`;
-  telegramLink.href = `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(message)}`;
+  whatsappLink.href = `https://wa.me/380978727877?text=${encodeURIComponent(message)}`;
+  telegramLink.href = `https://t.me/ilya_ivasyk?text=${encodeURIComponent(message)}`;
   orderDialog.showModal();
 }
 
@@ -397,7 +396,7 @@ document.getElementById('close-order').addEventListener('click', () => orderDial
 
 document.querySelectorAll('a[href="#say-hi"], [data-general-order]').forEach(link => {
   link.addEventListener('click', event => {
-  event.preventDefault();
+    event.preventDefault();
     openContact();
   });
 });

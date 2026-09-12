@@ -1556,7 +1556,6 @@ footer .made {
 .contact-option--whatsapp { background: #168b4e; }
 .contact-option--telegram { background: #1788b8; }
 .contact-option:hover { filter: brightness(.92); }
-#order-dialog .contact-note { margin: 16px 0 0; color: var(--ink-soft); }
 @media(max-width: 500px) { #order-dialog { padding: 28px 20px; } .contact-actions { grid-template-columns: 1fr; } }
 
 #cases-container { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 24px; }
