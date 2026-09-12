@@ -1,0 +1,107 @@
+
+section[id] { scroll-margin-top: 110px; }
+nav .me { color: inherit; text-decoration: none; }
+.books-inner { display: block; }
+.books-inner > div { max-width: 760px; }
+.book-gallery { max-width: 1200px; margin: 48px auto 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+.real-book { margin: 0; padding: 24px; background: #fff; border: 1px solid var(--border); border-radius: 16px; }
+.real-book img { display: block; width: 100%; height: 300px; object-fit: contain; filter: drop-shadow(4px 8px 8px #0002); }
+.real-book figcaption { margin-top: 20px; font-size: 15px; line-height: 1.4; text-align: center; }
+@media(max-width: 900px) {
+ nav { max-width: calc(100% - 24px); flex-wrap: wrap; justify-content: center; gap: 8px; }
+ nav ul { display: flex; order: 3; width: 100%; overflow-x: auto; gap: 16px; padding: 8px; }
+ nav ul li { flex-shrink: 0; }
+ .book-gallery { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+ .real-book { padding: 14px; }
+ .real-book img { height: 230px; }
+}
+@media(max-width: 500px) { .real-book img { height: 185px; } .real-book figcaption { font-size: 12px; } }
+
+.hero { max-width: 1760px; padding-inline: clamp(24px, 3vw, 56px); }
+.hero-text .lead { max-width: 650px; }
+.tech-icon { object-fit: contain; }
+.tech-mark { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font: 600 11px monospace; border: 1px solid #ffffff40; border-radius: 5px; color: #ffd84d; }
+@media (max-width: 900px) { .hero { padding-inline: 20px; } }
+
+/* Optical sizing: wide wordmarks need more space than square symbols. */
+.tech-icon { width: 22px; height: 22px; }
+.tech-icon[src$="woocommerce.svg"] { width: 58px; height: 32px; }
+.tech-icon[src$="gsap.svg"],
+.tech-icon[src$="gulp.svg"],
+.tech-icon[src$="mysql.svg"],
+.tech-icon[src$="php.svg"] { width: 42px; height: 32px; }
+.tech-mark { width: 24px; height: 24px; font-size: 11px; flex-shrink: 0; }
+
+
+nav[aria-label="Main navigation"] { width: min(980px, calc(100% - 40px)); }
+nav[aria-label="Main navigation"] ul { flex: 1; justify-content: space-evenly; }
+nav[aria-label="Main navigation"] ul a { display: block; white-space: nowrap; }
+nav[aria-label="Main navigation"] .me,
+nav[aria-label="Main navigation"] .say-hi { flex-shrink: 0; }
+@media (max-width: 900px) {
+  nav[aria-label="Main navigation"] { width: calc(100% - 24px); }
+  nav[aria-label="Main navigation"] ul { flex: 0 0 100%; justify-content: flex-start; }
+}
+
+/* Larger marks only for the requested hard-to-read tools. */
+.tool-group-quality .tech-mark,
+.tech-rankmath .tech-mark { width: 30px; height: 30px; font-size: 20px; }
+.tech-icon[src$="woocommerce.svg"] { width: 82px; height: 36px; }
+
+.woo-mark { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 27px; flex-shrink: 0; border-radius: 7px; background: #f4d477; color: #211f1b; font: 800 17px/1 Arial, sans-serif; letter-spacing: -1px; }
+
+/* Keep the stacked portrait secondary to the introduction. */
+@media (max-width: 1100px) {
+  .hero-portrait-frame { width: min(100%, 280px); }
+  .hero-main { gap: 28px; }
+}
+@media (max-width: 600px) {
+  .hero-portrait-frame { width: min(100%, 210px); }
+  .hero-main { gap: 20px; }
+}
+
+/* Center the introduction on compact desktop, tablet and mobile screens. */
+@media (max-width: 1280px) {
+  .hero-intro { justify-content: center; text-align: center; }
+  .hero-text { text-align: center; align-items: center; }
+  .hero-name, .hero-cta { justify-content: center; }
+}
+
+/* Compact section rhythm on smaller screens. */
+@media (max-width: 1280px) {
+  .work, .services, .about, .stack, .books-sec, .process, .final { padding-block: 56px; }
+  .work-header { margin-bottom: 32px; }
+  .stack-quote { margin-top: 32px; }
+  .book-gallery { margin-top: 32px; }
+}
+@media (max-width: 900px) {
+  .work, .services, .about, .stack, .books-sec, .process, .final { padding-block: 36px; }
+  .hero { padding-bottom: 32px; }
+  .work-header { margin-bottom: 24px; }
+  .project-controls { margin-top: 16px; }
+  .about-grid, .books-inner { gap: 24px; }
+  .services-intro { margin-bottom: 24px; }
+  .stack-inner h2 { margin-bottom: 28px; }
+}
+@media (max-width: 600px) {
+  .work, .services, .about, .stack, .books-sec, .process, .final { padding-block: 28px; }
+  .work-header { gap: 12px; }
+  .stack-quote, .book-gallery { margin-top: 24px; }
+}
+
+.niches { max-width: 1280px; margin: auto; padding: 80px 40px; }
+.niches h2 { font-family: 'Instrument Serif', serif; font-size: clamp(38px,5vw,68px); line-height: 1.05; font-weight: 400; letter-spacing: -.03em; margin-bottom: 24px; }
+.niches h2 em { color: var(--accent); }
+.niches-intro { max-width: 680px; line-height: 1.7; color: var(--ink-soft); margin-bottom: 32px; }
+.niche-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.niche-card { display: flex; flex-direction: column; padding: 24px; background: white; border: 1px solid var(--border); border-radius: 20px; }
+.niche-card:first-child { background: var(--bg-warm); border-color: var(--accent); }
+.niche-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 24px; }
+.niche-icon { font-size: 28px; color: var(--accent); }
+.niche-status { font: 10px monospace; color: var(--ink-soft); }
+.niche-card h3 { font-family: 'Instrument Serif',serif; font-size: 30px; font-weight: 400; margin-bottom: 12px; }
+.niche-card p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin-bottom: 24px; }
+.niche-card .order-btn { margin-top: auto; font-size: 13px; }
+@media(max-width:1280px) { .niches { padding-block: 56px; } }
+@media(max-width:900px) { .niches { padding: 36px 20px; } .niche-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:600px) { .niches { padding-block: 28px; } .niche-grid { grid-template-columns: 1fr; } }

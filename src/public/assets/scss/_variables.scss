@@ -1,0 +1,27 @@
+:root {
+  --bg: #FAF7F2;
+  --bg-warm: #F5EFE4;
+  --ink: #1A1815;
+  --ink-soft: #3D3A35;
+  --muted: #8A857C;
+  --accent: #FF5A1F;
+  --accent-soft: #FFE5D6;
+  --yellow: #FFD84D;
+  --green: #7CB342;
+  --blue: #4A90E2;
+  --pink: #FFB5C5;
+  --border: #E5DFD3;
+}
+
+$bg: var(--bg);
+$ink: var(--ink);
+$accent: var(--accent);
+$yellow: var(--yellow);
+$green: var(--green);
+$pink: var(--pink);
+$border: var(--border);
+
+$font-serif: 'Instrument Serif', serif;
+$font-mono: 'JetBrains Mono', monospace;
+$font-hand: 'Caveat', cursive;
+$font-sans: 'Inter', sans-serif;

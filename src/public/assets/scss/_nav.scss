@@ -1,0 +1,101 @@
+nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 8px 10px 8px 18px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+
+  .me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-serif;
+    font-size: 17px;
+    padding-right: 14px;
+    border-right: 1px solid rgba(250,247,242,.15);
+
+    &::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(124,179,66,.25);
+      animation: pulse 2s infinite;
+    }
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 4px;
+
+    a {
+      color: rgba(250,247,242,.7);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 100px;
+      transition: all .2s;
+      font-family: $font-mono;
+      font-size: 11px;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+
+      &:hover { color: var(--bg); background: rgba(250,247,242,.08); }
+    }
+  }
+
+  .say-hi {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+}
+
+/* ---- Language switcher ---- */
+.lang-switch {
+  display: flex;
+  gap: 2px;
+  border: 1px solid rgba(250,247,242,.2);
+  border-radius: 100px;
+  padding: 2px;
+
+  .lang-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(250,247,242,.5);
+    font-family: $font-mono;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+    border-radius: 100px;
+    transition: all .2s;
+
+    &:hover { color: var(--bg); }
+
+    &.active {
+      background: rgba(250,247,242,.15);
+      color: var(--bg);
+    }
+  }
+}

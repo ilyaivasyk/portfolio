@@ -1,0 +1,90 @@
+.books-sec {
+  padding: 100px 40px;
+  background: var(--bg-warm);
+  position: relative;
+  z-index: 2;
+}
+
+.books-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 60px;
+  align-items: center;
+
+  h2 {
+    font-family: $font-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+
+    em { font-style: italic; color: var(--accent); }
+  }
+
+  .lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+}
+
+.amazon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: $font-mono;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 14px 22px;
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  transition: all .2s;
+
+  &:hover { background: var(--ink); color: var(--bg); }
+}
+
+.book-stack {
+  position: relative;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    .book:nth-child(1) { transform: translateX(-280px) rotate(-14deg); }
+    .book:nth-child(2) { transform: translateX(-140px) rotate(-7deg); }
+    .book:nth-child(4) { transform: translateX(140px)  rotate(7deg); }
+    .book:nth-child(5) { transform: translateX(280px)  rotate(14deg); }
+  }
+}
+
+.book {
+  position: absolute;
+  width: 180px;
+  height: 240px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 4px 12px 12px 4px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: -4px 6px 20px rgba(0,0,0,.15);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
+
+  &:nth-child(1) { background: var(--accent); color: #fff; transform: translateX(-80px) rotate(-8deg); z-index: 1; }
+  &:nth-child(2) { background: var(--yellow); color: var(--ink); transform: translateX(-40px) rotate(-4deg); z-index: 2; }
+  &:nth-child(3) { background: var(--ink); color: var(--bg); z-index: 3; }
+  &:nth-child(4) { background: var(--green); color: #fff; transform: translateX(40px) rotate(4deg); z-index: 2; }
+  &:nth-child(5) { background: var(--blue);  color: #fff; transform: translateX(80px) rotate(8deg); z-index: 1; }
+
+  .lang { font-family: $font-mono; font-size: 11px; letter-spacing: 0.2em; opacity: .7; }
+
+  h5 { font-family: $font-serif; font-size: 22px; line-height: 1; letter-spacing: -0.02em; }
+
+  .type { font-family: $font-mono; font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; opacity: .6; }
+}
