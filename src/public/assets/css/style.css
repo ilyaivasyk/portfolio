@@ -1528,10 +1528,12 @@ footer .made {
 .services-intro, .services-note { color: var(--ink-soft); font-size: 15px; line-height: 1.7; max-width: 760px; margin-bottom: 32px; }
 .services-note { margin-top: 28px; font-size: 13px; }
 .svc { display: flex; flex-direction: column; }
-.svc:nth-child(4n + 1) { background: #fff; border-radius: 24px 24px 8px 24px; }
-.svc:nth-child(4n + 2) { background: #fff4bf; }
-.svc:nth-child(4n + 3) { background: #e8f1ff; border-radius: 8px 24px 24px; }
-.svc:nth-child(4n) { background: #e7f5e9; border-radius: 24px 8px 24px 24px; }
+.svc:nth-child(3) { background: #eef1f5; }
+.svc:nth-child(7) { background: #f2edf2; }
+.svc:nth-child(10) { background: #f4edde; border-color: #d9c9aa; }
+.svc:nth-child(11) { background: #2c2830; color: var(--bg); border-color: #2c2830; }
+.svc:nth-child(11) p, .svc:nth-child(11) .svc-price small { color: #cec8d1; }
+.svc:nth-child(11) .svc-bottom { border-color: rgb(250 247 242 / .18); }
 .svc.featured { background: var(--ink); }
 .svc-bottom { margin-top: auto; gap: 12px; }
 .svc-emoji { font-family: monospace; font-size: 14px; color: var(--accent); letter-spacing: .12em; }
