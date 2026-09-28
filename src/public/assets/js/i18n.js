@@ -10,7 +10,7 @@ const translations = {
     "hero": {
       "intro": "A WordPress engineer from Ukraine · writing this in 2026",
       "h1": "I build <span class=\"underline\">WordPress sites</span> that don't <em>suck.</em>",
-      "lead": "<b>Custom themes. No Elementor. No template bloat.</b> Just clean PHP, Tailwind, and sites that load before your coffee gets cold. I've shipped for translation agencies, local businesses, and written 9 books teaching others how to do the same.",
+      "lead": "<b>Elementor builds and custom themes.</b> I create clean, fast WordPress sites tailored to each project — from flexible business websites to fully custom solutions. I've shipped projects for translation agencies and local businesses, and written 9 books on web development.",
       "cta_main": "Let's build something",
       "cta_text": "or peek at my work ↓"
     },
@@ -24,7 +24,7 @@ const translations = {
     "about": {
       "tag": "A bit about me",
       "h2": "A developer who\n<em>solves problems,</em>\nnot just writes code.",
-      "p1": "I'm a WordPress developer from Ukraine. <b>I specialise in custom themes and plugins</b> — no page builders, no bloat.",
+      "p1": "I'm a WordPress developer from Ukraine. <b>I build with Elementor, custom themes and plugins</b>, choosing the right approach for each project.",
       "p2": "I build on <span class=\"highlight\">Sage + Blade + Tailwind</span>, set up CI/CD, and care deeply about performance. Sites I deliver are fast, secure, and easy to edit.",
       "p3": "I've written <b>9 books</b> on HTML, CSS, JS, Python, Java and BEM for Amazon. When I say I know a stack, it's because I've written the textbook on it.",
       "facts": {
