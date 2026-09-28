@@ -147,7 +147,7 @@ const translations = {
           "emoji": "01",
           "title": "Landing page",
           "desc": "One focused page with up to 6 sections, responsive layout and direct messenger contact links. You supply the copy and images.",
-          "price": "$450",
+          "price": "$300",
           "when": "from 3 days",
           "price_label": "from",
           "featured": false
@@ -156,7 +156,7 @@ const translations = {
           "emoji": "02",
           "title": "Business website",
           "desc": "Up to 5 pages, a custom WordPress build and editable content. For service businesses ready for a professional website.",
-          "price": "$1,200",
+          "price": "$500",
           "when": "~ 2–3 weeks",
           "price_label": "from",
           "featured": true
@@ -165,7 +165,7 @@ const translations = {
           "emoji": "03",
           "title": "Website redesign",
           "desc": "A fresh design and rebuild of one existing page. Larger redesigns are quoted after reviewing your current website.",
-          "price": "$600",
+          "price": "$300",
           "when": "from 3 days",
           "price_label": "from",
           "featured": false
@@ -174,7 +174,7 @@ const translations = {
           "emoji": "04",
           "title": "Website builder migration",
           "desc": "Rebuild one page from Elementor, Divi, WPBakery or another website builder as a custom WordPress page, keeping its content and layout.",
-          "price": "$400",
+          "price": "$300",
           "when": "from 3 days",
           "price_label": "from",
           "featured": false
@@ -183,7 +183,7 @@ const translations = {
           "emoji": "05",
           "title": "Full website migration",
           "desc": "Move your website from a page builder or hosted platform to custom WordPress. Starting scope: up to 3 simple pages.",
-          "price": "$800",
+          "price": "$500",
           "when": "~ 1–2 weeks",
           "price_label": "from",
           "featured": false
@@ -192,7 +192,7 @@ const translations = {
           "emoji": "06",
           "title": "Figma to WordPress",
           "desc": "Turn one supplied desktop and mobile page design into an editable WordPress page. Design files provided by you.",
-          "price": "$350",
+          "price": "$300",
           "when": "from 3 days",
           "price_label": "from",
           "featured": false
@@ -201,7 +201,7 @@ const translations = {
           "emoji": "07",
           "title": "AI integrations",
           "desc": "Connect one AI-powered feature, such as a website assistant or content workflow, using an existing AI service.",
-          "price": "$500",
+          "price": "$300",
           "when": "from 3 days",
           "price_label": "from",
           "featured": false
@@ -219,7 +219,7 @@ const translations = {
           "emoji": "09",
           "title": "API & workflow automation",
           "desc": "Connect two existing services through one API or webhook workflow. Reduce repetitive data entry and manual handoffs.",
-          "price": "$350",
+          "price": "$300",
           "when": "from 3 days",
           "price_label": "from",
           "featured": false
@@ -228,7 +228,7 @@ const translations = {
           "emoji": "10",
           "title": "Simple ecommerce",
           "desc": "A lightweight catalog with up to 10 supplied products and ordering through WhatsApp or Telegram. No WooCommerce, cart or online payment.",
-          "price": "$800",
+          "price": "$500",
           "when": "~ 1–2 weeks",
           "price_label": "from",
           "featured": false
@@ -237,7 +237,7 @@ const translations = {
           "emoji": "11",
           "title": "WooCommerce store",
           "desc": "A starter shop with up to 10 supplied products, standard checkout and one supported payment gateway.",
-          "price": "$1,500",
+          "price": "$700",
           "when": "~ 3–5 weeks",
           "price_label": "from",
           "featured": false
@@ -255,7 +255,7 @@ const translations = {
           "emoji": "13",
           "title": "Custom WordPress features",
           "desc": "One small plugin or custom feature scoped around your workflow. Complex systems receive a separate quote.",
-          "price": "$450",
+          "price": "$300",
           "when": "Scope-dependent",
           "price_label": "from",
           "featured": false
@@ -264,7 +264,7 @@ const translations = {
           "emoji": "14",
           "title": "Website maintenance",
           "desc": "Monthly updates, backup checks and up to 1 hour of minor fixes for one WordPress site.",
-          "price": "$250",
+          "price": "$150",
           "when": "Monthly",
           "price_label": "per month",
           "featured": false
