@@ -331,7 +331,7 @@ function applyLang(lang) {
 function renderWork(t) {
   const container = document.getElementById('cases-container');
   if (!container) return;
-  const covers = ['orange-cover.png', 'tooclean-fiverr.webp', 'eco-fiverr.webp', 'dvir-fiverr.webp', 'elite-fiverr.webp'];
+  const covers = ['orange-cover-closed.webp', 'tooclean-fiverr.webp', 'eco-fiverr.webp', 'dvir-fiverr.webp', 'elite-fiverr.webp'];
   container.innerHTML = t.work.cases.map((c, i) => `
     <div class="case">
       <a class="project-cover" href="${c.link}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${c.h3.replace(/<br>/g, ' ')}">
