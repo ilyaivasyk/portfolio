@@ -457,10 +457,19 @@ if (globe) {
   const tooltip = document.getElementById('globe-tooltip');
   const countryButtons = [...document.querySelectorAll('[data-country]')];
   const countries = [
-    {id: 'usa', name: 'United States', lat: 39, lon: -98},
-    {id: 'canada', name: 'Canada', lat: 57, lon: -106},
-    {id: 'ireland', name: 'Ireland', lat: 53, lon: -8},
-    {id: 'ukraine', name: 'Ukraine', lat: 49, lon: 31}
+    {id: 'usa', name: 'United States', lat: 39, lon: -98, labelY: 22, area: [[49,-124],[49,-95],[47,-67],[31,-81],[25,-97],[32,-117]]},
+    {id: 'canada', name: 'Canada', lat: 57, lon: -106, labelY: -12, area: [[70,-140],[72,-100],[65,-60],[50,-55],[49,-95],[49,-124],[58,-135]]},
+    {id: 'ireland', name: 'Ireland', lat: 53, lon: -8, labelY: -12, area: [[55,-10],[55,-6],[51,-6],[51,-10]]},
+    {id: 'ukraine', name: 'Ukraine', lat: 49, lon: 31, labelY: 20, area: [[52,22],[52,34],[49,40],[45,33],[46,23]]}
+  ];
+  const land = [
+    [[72,-168],[70,-140],[58,-128],[50,-125],[32,-117],[23,-110],[18,-95],[22,-84],[30,-81],[45,-60],[55,-55],[63,-72],[72,-95]],
+    [[12,-81],[5,-78],[-5,-80],[-18,-72],[-35,-70],[-55,-68],[-50,-54],[-30,-48],[-10,-35],[5,-50]],
+    [[36,-10],[44,-10],[50,-5],[58,-8],[71,18],[65,31],[56,40],[46,42],[36,30],[34,12]],
+    [[35,-17],[37,10],[31,33],[12,44],[-12,40],[-35,20],[-35,5],[-20,-12],[5,-17],[20,-10]],
+    [[36,30],[45,42],[55,40],[68,65],[72,110],[62,150],[48,145],[35,120],[20,108],[8,78],[22,55]],
+    [[-11,113],[-18,145],[-39,147],[-44,115],[-25,112]],
+    [[60,-52],[73,-58],[82,-38],[77,-18],[63,-42]]
   ];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let rotation = -35;
@@ -473,7 +482,12 @@ if (globe) {
   const project = (lat, lon, radius, cx, cy) => {
     const phi = lat * Math.PI / 180;
     const lambda = (lon - rotation) * Math.PI / 180;
-    return {x: cx + radius * Math.cos(phi) * Math.sin(lambda), y: cy - radius * Math.sin(phi), z: Math.cos(phi) * Math.cos(lambda)};
+    const tilt = 25 * Math.PI / 180;
+    return {
+      x: cx + radius * Math.cos(phi) * Math.sin(lambda),
+      y: cy - radius * (Math.cos(tilt) * Math.sin(phi) - Math.sin(tilt) * Math.cos(phi) * Math.cos(lambda)),
+      z: Math.sin(tilt) * Math.sin(phi) + Math.cos(tilt) * Math.cos(phi) * Math.cos(lambda)
+    };
   };
 
   const line = (samples, radius, cx, cy, color, width = 1) => {
@@ -487,6 +501,27 @@ if (globe) {
     });
     ctx.strokeStyle = color;
     ctx.lineWidth = width;
+    ctx.stroke();
+  };
+
+  const polygon = (ring, radius, cx, cy, fill, stroke) => {
+    ctx.beginPath();
+    let drawing = false;
+    ring.forEach(([lat, lon], index) => {
+      const next = ring[(index + 1) % ring.length];
+      for (let step = 0; step < 6; step += 1) {
+        const amount = step / 6;
+        const p = project(lat + (next[0] - lat) * amount, lon + (next[1] - lon) * amount, radius, cx, cy);
+        if (p.z <= 0) { drawing = false; continue; }
+        if (!drawing) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+        drawing = true;
+      }
+    });
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 1;
     ctx.stroke();
   };
 
@@ -517,6 +552,8 @@ if (globe) {
     ctx.beginPath();
     ctx.arc(cx, cy, radius, 0, Math.PI * 2);
     ctx.clip();
+    land.forEach(ring => polygon(ring, radius, cx, cy, 'rgba(250,247,242,.18)', 'rgba(250,247,242,.28)'));
+    countries.forEach(country => polygon(country.area, radius, cx, cy, 'rgba(255,90,31,.72)', 'rgba(255,197,171,.95)'));
     for (let lat = -60; lat <= 60; lat += 30) line(Array.from({length: 181}, (_, i) => [lat, i * 2 - 180]), radius, cx, cy, 'rgba(250,247,242,.15)');
     for (let lon = -150; lon <= 180; lon += 30) line(Array.from({length: 121}, (_, i) => [i - 60, lon]), radius, cx, cy, 'rgba(250,247,242,.12)');
     ctx.restore();
@@ -535,6 +572,15 @@ if (globe) {
       ctx.strokeStyle = '#faf7f2';
       ctx.lineWidth = 2;
       ctx.stroke();
+      ctx.font = `${rect.width < 440 ? 9 : 11}px 'JetBrains Mono', monospace`;
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#faf7f2';
+      ctx.shadowColor = '#11100e';
+      ctx.shadowBlur = 5;
+      const labelWidth = ctx.measureText(point.name).width;
+      const labelX = Math.max(cx - radius + 8, Math.min(point.x + 10, cx + radius - labelWidth - 8));
+      ctx.fillText(point.name, labelX, point.y + point.labelY);
+      ctx.shadowBlur = 0;
     });
   };
 
