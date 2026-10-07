@@ -450,3 +450,148 @@ document.getElementById('niches')?.addEventListener('click', event => {
   if (!button) return;
   openContact(button.dataset.niche + ' website');
 });
+
+const globe = document.getElementById('client-globe');
+if (globe) {
+  const ctx = globe.getContext('2d');
+  const tooltip = document.getElementById('globe-tooltip');
+  const countryButtons = [...document.querySelectorAll('[data-country]')];
+  const countries = [
+    {id: 'usa', name: 'United States', lat: 39, lon: -98},
+    {id: 'canada', name: 'Canada', lat: 57, lon: -106},
+    {id: 'ireland', name: 'Ireland', lat: 53, lon: -8},
+    {id: 'ukraine', name: 'Ukraine', lat: 49, lon: 31}
+  ];
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rotation = -35;
+  let dragging = false;
+  let lastX = 0;
+  let hovered = null;
+  let pausedUntil = 0;
+  let points = [];
+
+  const project = (lat, lon, radius, cx, cy) => {
+    const phi = lat * Math.PI / 180;
+    const lambda = (lon - rotation) * Math.PI / 180;
+    return {x: cx + radius * Math.cos(phi) * Math.sin(lambda), y: cy - radius * Math.sin(phi), z: Math.cos(phi) * Math.cos(lambda)};
+  };
+
+  const line = (samples, radius, cx, cy, color, width = 1) => {
+    ctx.beginPath();
+    let drawing = false;
+    samples.forEach(([lat, lon]) => {
+      const p = project(lat, lon, radius, cx, cy);
+      if (p.z <= 0) { drawing = false; return; }
+      if (!drawing) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      drawing = true;
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.stroke();
+  };
+
+  const draw = () => {
+    const rect = globe.getBoundingClientRect();
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    if (globe.width !== Math.round(rect.width * dpr) || globe.height !== Math.round(rect.height * dpr)) {
+      globe.width = Math.round(rect.width * dpr);
+      globe.height = Math.round(rect.height * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const radius = Math.min(rect.width, rect.height) * .41;
+    const glow = ctx.createRadialGradient(cx - radius * .35, cy - radius * .4, radius * .05, cx, cy, radius);
+    glow.addColorStop(0, '#3c3933');
+    glow.addColorStop(.68, '#201e1a');
+    glow.addColorStop(1, '#11100e');
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.fillStyle = glow;
+    ctx.shadowColor = 'rgba(255,90,31,.28)';
+    ctx.shadowBlur = 42;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.clip();
+    for (let lat = -60; lat <= 60; lat += 30) line(Array.from({length: 181}, (_, i) => [lat, i * 2 - 180]), radius, cx, cy, 'rgba(250,247,242,.15)');
+    for (let lon = -150; lon <= 180; lon += 30) line(Array.from({length: 121}, (_, i) => [i - 60, lon]), radius, cx, cy, 'rgba(250,247,242,.12)');
+    ctx.restore();
+
+    points = countries.map(country => ({...country, ...project(country.lat, country.lon, radius, cx, cy)})).filter(point => point.z > 0);
+    points.forEach(point => {
+      const active = hovered?.id === point.id;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, active ? 16 : 11, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,90,31,.18)';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, active ? 6 : 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff5a1f';
+      ctx.fill();
+      ctx.strokeStyle = '#faf7f2';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  };
+
+  const showCountry = country => {
+    hovered = country;
+    countryButtons.forEach(button => button.classList.toggle('is-active', button.dataset.country === country?.id));
+    if (!country) { tooltip.classList.remove('is-visible'); return; }
+    const point = points.find(item => item.id === country.id);
+    if (!point) return;
+    tooltip.textContent = country.name;
+    tooltip.style.left = `${point.x}px`;
+    tooltip.style.top = `${point.y}px`;
+    tooltip.classList.add('is-visible');
+  };
+
+  const locate = event => {
+    const rect = globe.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    return points.find(point => Math.hypot(point.x - x, point.y - y) < 22) || null;
+  };
+
+  globe.addEventListener('pointerdown', event => {
+    dragging = true;
+    lastX = event.clientX;
+    pausedUntil = performance.now() + 5000;
+    globe.setPointerCapture(event.pointerId);
+  });
+  globe.addEventListener('pointermove', event => {
+    if (dragging) {
+      rotation -= (event.clientX - lastX) * .35;
+      lastX = event.clientX;
+      showCountry(null);
+    } else showCountry(locate(event));
+  });
+  globe.addEventListener('pointerup', () => { dragging = false; });
+  globe.addEventListener('pointerleave', () => { if (!dragging) showCountry(null); });
+  globe.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    rotation += event.key === 'ArrowLeft' ? -8 : 8;
+    pausedUntil = performance.now() + 5000;
+  });
+  countryButtons.forEach(button => button.addEventListener('click', () => {
+    const country = countries.find(item => item.id === button.dataset.country);
+    rotation = country.lon;
+    pausedUntil = performance.now() + 5000;
+    draw();
+    showCountry(country);
+    globe.focus({preventScroll: true});
+  }));
+
+  const animate = now => {
+    if (!reducedMotion && !dragging && now > pausedUntil) rotation += .035;
+    draw();
+    if (hovered) showCountry(hovered);
+    requestAnimationFrame(animate);
+  };
+  requestAnimationFrame(animate);
+}

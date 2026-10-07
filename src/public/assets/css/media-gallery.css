@@ -39,8 +39,86 @@ nav[aria-label="Main navigation"] ul a { display: block; white-space: nowrap; }
 nav[aria-label="Main navigation"] .me,
 nav[aria-label="Main navigation"] .say-hi { flex-shrink: 0; }
 @media (max-width: 900px) {
-  nav[aria-label="Main navigation"] { width: calc(100% - 24px); }
-  nav[aria-label="Main navigation"] ul { flex: 0 0 100%; justify-content: flex-start; }
+  nav[aria-label="Main navigation"] { width: calc(100% - 24px); flex-wrap: nowrap; justify-content: space-between; }
+  nav[aria-label="Main navigation"] ul { display: none; }
+}
+
+/* Client globe */
+.clients {
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 96px clamp(24px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(420px, 1.2fr);
+  align-items: center;
+  gap: clamp(32px, 7vw, 120px);
+  overflow: hidden;
+}
+.clients-copy h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(52px, 6vw, 96px);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.04em;
+}
+.clients-copy h2 em { color: var(--accent); font-weight: 400; }
+.clients-copy > p { max-width: 540px; margin: 28px 0 36px; color: var(--ink-soft); font-size: 17px; line-height: 1.7; }
+.client-countries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 540px; }
+.client-countries button {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--ink);
+  font: 600 13px/1.2 'Inter', sans-serif;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.client-countries button span { color: var(--muted); font: 10px 'JetBrains Mono', monospace; }
+.client-countries button:hover,
+.client-countries button:focus-visible,
+.client-countries button.is-active { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); outline: none; }
+.globe-wrap { position: relative; width: min(100%, 680px); justify-self: center; aspect-ratio: 1; }
+#client-globe { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+#client-globe:active { cursor: grabbing; }
+#client-globe:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 50%; }
+.globe-tooltip {
+  position: absolute;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 100px;
+  background: var(--ink);
+  color: var(--bg);
+  font: 11px 'JetBrains Mono', monospace;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -130%);
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+.globe-tooltip.is-visible { opacity: 1; }
+.globe-hint { position: absolute; left: 50%; bottom: 5%; transform: translateX(-50%); color: var(--muted); font: 10px 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .14em; white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .clients { grid-template-columns: 1fr; padding: 48px 20px; gap: 20px; text-align: center; }
+  .clients-copy > p, .client-countries { margin-left: auto; margin-right: auto; }
+  .globe-wrap { width: min(100%, 520px); }
+}
+@media (max-width: 500px) {
+  nav[aria-label="Main navigation"] { top: 10px; }
+  nav[aria-label="Main navigation"] .me { font-size: 14px; }
+  nav[aria-label="Main navigation"] .say-hi { padding: 9px 13px; }
+  .clients { padding-block: 36px; }
+  .clients-copy h2 { font-size: clamp(46px, 15vw, 64px); }
+  .clients-copy > p { margin-block: 20px 24px; font-size: 15px; }
+  .client-countries { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .client-countries button { padding: 11px 12px; gap: 7px; font-size: 11px; }
+  .globe-wrap { width: calc(100% + 20px); margin-inline: -10px; }
 }
 
 /* Larger marks only for the requested hard-to-read tools. */
