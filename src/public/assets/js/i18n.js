@@ -41,8 +41,22 @@ const translations = {
     "work": {
       "tag": "Selected work",
       "h2": "Some things I've\n<em>shipped.</em>",
-      "note": "Four real projects. Different briefs, hands-on delivery.",
+      "note": "Five real projects. Different briefs, hands-on delivery.",
       "cases": [
+        {
+          "type": "Healthcare · Los Angeles, USA",
+          "h3": "Orange Home<br>Health Inc.",
+          "bg": "orange home health",
+          "h4": "Orange Home Health: care starts at home.",
+          "problem": "Designed and developed a custom WordPress website for a home health agency in Los Angeles. The project included editable ACF blocks, service pages, coverage and insurance information, secure enquiry forms, SEO and GoDaddy deployment. Optimized images and critical CSS helped achieve 99 mobile Performance and 100 Accessibility, Best Practices and SEO in a Lighthouse test.",
+          "link": "https://orangehomehealthinc.com/",
+          "tags": [
+            "Medical website",
+            "WordPress",
+            "SEO & performance"
+          ],
+          "link_text": "Visit live website ↗"
+        },
         {
           "type": "Cleaning services · Canada",
           "h3": "TooClean",
@@ -317,11 +331,11 @@ function applyLang(lang) {
 function renderWork(t) {
   const container = document.getElementById('cases-container');
   if (!container) return;
-  const covers = ['tooclean', 'eco', 'dvir', 'elite'];
+  const covers = ['orange-cover.png', 'tooclean-fiverr.webp', 'eco-fiverr.webp', 'dvir-fiverr.webp', 'elite-fiverr.webp'];
   container.innerHTML = t.work.cases.map((c, i) => `
     <div class="case">
       <a class="project-cover" href="${c.link}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${c.h3.replace(/<br>/g, ' ')}">
-        <img src="assets/img/${covers[i]}-fiverr.webp" alt="${c.h3.replace(/<br>/g, ' ')} — project presentation" width="1536" height="1024" loading="lazy" decoding="async">
+        <img src="assets/img/${covers[i]}" alt="${c.h3.replace(/<br>/g, ' ')} — project presentation" width="1536" height="1024" loading="lazy" decoding="async">
       </a>
       <div class="case-info">
         <div>
